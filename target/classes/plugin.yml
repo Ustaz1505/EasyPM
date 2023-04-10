@@ -1,0 +1,12 @@
+name: EasyPM
+version: '1.0-SNAPSHOT'
+main: com.ustaz1505.easypm.EasyPM
+api-version: 1.19
+prefix: "[EasyPM]"
+load: STARTUP
+authors: [Ustaz1505]
+commands:
+  pm:
+    description: Just Personal message command
+    usage: /pm <User> <Message>
+    permission: easypm.pm
