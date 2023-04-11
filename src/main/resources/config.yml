@@ -1,13 +1,18 @@
 # EasyPM v1.0 Config
+# Color codes in console logs will not work! Do not even try to use it.
 
-log-prefix: [EasyPM]
+log-prefix: "[EasyPM]"
+msg-prefix : "[&aP&bM&r]"
+
+reload-msg: "Reloaded plugin successfully!"
 
 # /pm settings
 
 # User messages:
 # You can use {receiver-name}, {sender-name}, {message}
+# For color system use &-codes
 
 # This message will be sent to a message sender
-pm-sender-message: Вы отправили сообщение игроку {receiver-name}
+pm-sender-message: "Вы отправили сообщение игроку {receiver-name}"
 # This message will be sent to a message receiver
-pm-receiver-message: Получено сообщение от {sender-name} "{message}"!
+pm-receiver-message: "Получено сообщение от {sender-name} - {message}!"
