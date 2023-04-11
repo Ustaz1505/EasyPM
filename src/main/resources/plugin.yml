@@ -8,10 +8,10 @@ commands:
   pm:
     description: Just Personal message command
     usage: /pm <User> <Message>
-    permission: easypm.pm.read
+    permission: easypm.pm
   easypm:
     description: EasyPM Command
-    usage: /easypm <reload>
+    usage: /easypm <method>
     permission: easypm.easypm
     aliases:
       - epm
