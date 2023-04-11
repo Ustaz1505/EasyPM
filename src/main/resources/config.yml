@@ -2,3 +2,12 @@
 
 log-prefix: [EasyPM]
 
+# /pm settings
+
+# User messages:
+# You can use {receiver-name}, {sender-name}, {message}
+
+# This message will be sent to a message sender
+pm-sender-message: Вы отправили сообщение игроку {receiver-name}
+# This message will be sent to a message receiver
+pm-receiver-message: Получено сообщение от {sender-name} "{message}"!
