@@ -8,4 +8,4 @@ commands:
   pm:
     description: Just Personal message command
     usage: /pm <User> <Message>
-    permission: easypm.pm
+    permission: easypm.pm.read
