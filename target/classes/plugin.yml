@@ -1,8 +1,7 @@
 name: EasyPM
-version: '1.0-SNAPSHOT'
+version: '1.0.1-SNAPSHOT'
 main: com.ustaz1505.easypm.EasyPM
 api-version: 1.19
-prefix: "[EasyPM]"
 load: STARTUP
 authors: [Ustaz1505]
 commands:
