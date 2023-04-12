@@ -7,11 +7,8 @@ import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
 import org.jetbrains.annotations.NotNull;
 
-import static com.ustaz1505.easypm.EasyPM.epm;
-import static com.ustaz1505.easypm.EasyPM.logPrefix;
-import static com.ustaz1505.easypm.EasyPM.msgPrefix;
-import static com.ustaz1505.easypm.EasyPM.config;
-import static com.ustaz1505.easypm.EasyPM.logger;
+import static com.ustaz1505.easypm.EasyPM.*;
+
 import java.util.Objects;
 
 public class EasyPMCommand implements CommandExecutor {
@@ -21,11 +18,19 @@ public class EasyPMCommand implements CommandExecutor {
             if (sender instanceof Player) {
                 epm.reloadConfig();
                 config = epm.getConfig();
+                logPrefix = config.getString("log-prefix") + " ";
+                msgPrefix = config.getString("msg-prefix") + " ";
+                notPlayerError = config.getString("not-player-err");
+                notOnlinePlayer = config.getString("not-online-player");
                 sender.sendMessage(LegacyComponentSerializer.legacyAmpersand().deserialize(msgPrefix + config.getString("reload-msg")));
                 return true;
             } else {
                 epm.reloadConfig();
                 config = epm.getConfig();
+                logPrefix = config.getString("log-prefix") + " ";
+                msgPrefix = config.getString("msg-prefix") + " ";
+                notPlayerError = config.getString("not-player-err");
+                notOnlinePlayer = config.getString("not-online-player");
                 logger.info(logPrefix + config.getString("reload-msg"));
                 return true;
             }

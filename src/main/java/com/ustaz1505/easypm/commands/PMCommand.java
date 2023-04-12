@@ -17,17 +17,17 @@ public class PMCommand implements CommandExecutor{
     @Override
     public boolean onCommand(@NotNull CommandSender sender, @ NotNull Command command, @NotNull String label, String[] args) {
         if (!(sender instanceof Player)) {
-            getLogger().info(logPrefix + "Команда может быть выполнена только пользователем!");
+            getLogger().info(logPrefix + notPlayerError);
             return true;
         }
         Player player = (Player) sender;
         if (args.length < 2) {
-            player.sendMessage(LegacyComponentSerializer.legacyAmpersand().deserialize(msgPrefix + "Используй /pm <Ник> <Сообщение>!"));
+            player.sendMessage(LegacyComponentSerializer.legacyAmpersand().deserialize(msgPrefix + "Use /pm <Nickname> <Message>!"));
             return true;
         }
         Player target = getServer().getPlayer(args[0]);
         if (target == null) {
-            player.sendMessage(LegacyComponentSerializer.legacyAmpersand().deserialize(msgPrefix + "Игрок не в сети!"));
+            player.sendMessage(LegacyComponentSerializer.legacyAmpersand().deserialize(msgPrefix + notPlayerError));
             return true;
         }
 

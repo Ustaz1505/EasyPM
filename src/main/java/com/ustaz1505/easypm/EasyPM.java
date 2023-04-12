@@ -8,7 +8,6 @@ import org.bukkit.configuration.file.FileConfiguration;
 import org.bukkit.plugin.Plugin;
 import org.bukkit.plugin.java.JavaPlugin;
 
-import java.util.List;
 import java.util.Objects;
 import java.util.logging.Logger;
 
@@ -17,6 +16,8 @@ public final class EasyPM extends JavaPlugin {
     public static FileConfiguration config;
     public static String logPrefix;
     public static String msgPrefix;
+    public static String notPlayerError;
+    public static String notOnlinePlayer;
     public static Logger logger;
 
     @Override
@@ -29,6 +30,8 @@ public final class EasyPM extends JavaPlugin {
         config = epm.getConfig();
         logPrefix = config.getString("log-prefix") + " ";
         msgPrefix = config.getString("msg-prefix") + " ";
+        notPlayerError = config.getString("not-player-err");
+        notOnlinePlayer = config.getString("not-online-player");
         logger = epm.getLogger();
 
         Objects.requireNonNull(this.getCommand("pm")).setExecutor(new PMCommand());
