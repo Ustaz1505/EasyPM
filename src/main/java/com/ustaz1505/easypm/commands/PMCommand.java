@@ -9,9 +9,7 @@ import org.jetbrains.annotations.NotNull;
 
 import java.util.Objects;
 
-import static com.ustaz1505.easypm.EasyPM.epm;
-import static com.ustaz1505.easypm.EasyPM.logPrefix;
-import static com.ustaz1505.easypm.EasyPM.config;
+import static com.ustaz1505.easypm.EasyPM.*;
 import static org.bukkit.Bukkit.*;
 
 
@@ -19,17 +17,17 @@ public class PMCommand implements CommandExecutor{
     @Override
     public boolean onCommand(@NotNull CommandSender sender, @ NotNull Command command, @NotNull String label, String[] args) {
         if (!(sender instanceof Player)) {
-            getLogger().info(epm.getConfig() + "Команда может быть выполнена только пользователем!");
+            getLogger().info(logPrefix + "Команда может быть выполнена только пользователем!");
             return true;
         }
         Player player = (Player) sender;
         if (args.length < 2) {
-            player.sendMessage(LegacyComponentSerializer.legacyAmpersand().deserialize(logPrefix + "Используй /pm <Ник> <Сообщение>!"));
+            player.sendMessage(LegacyComponentSerializer.legacyAmpersand().deserialize(msgPrefix + "Используй /pm <Ник> <Сообщение>!"));
             return true;
         }
         Player target = getServer().getPlayer(args[0]);
         if (target == null) {
-            player.sendMessage("Игрок не в сети!");
+            player.sendMessage(LegacyComponentSerializer.legacyAmpersand().deserialize(msgPrefix + "Игрок не в сети!"));
             return true;
         }
 
