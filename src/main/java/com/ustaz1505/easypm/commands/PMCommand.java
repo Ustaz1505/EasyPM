@@ -1,6 +1,5 @@
 package com.ustaz1505.easypm.commands;
 
-import net.kyori.adventure.sound.Sound;
 import net.kyori.adventure.text.serializer.legacy.LegacyComponentSerializer;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandExecutor;
