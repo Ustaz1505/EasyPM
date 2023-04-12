@@ -1,5 +1,6 @@
 package com.ustaz1505.easypm.commands;
 
+import net.kyori.adventure.sound.Sound;
 import net.kyori.adventure.text.serializer.legacy.LegacyComponentSerializer;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandExecutor;
@@ -7,11 +8,12 @@ import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
 import org.jetbrains.annotations.NotNull;
 
+import java.util.Objects;
+
 import static com.ustaz1505.easypm.EasyPM.epm;
 import static com.ustaz1505.easypm.EasyPM.logPrefix;
 import static com.ustaz1505.easypm.EasyPM.config;
-import static org.bukkit.Bukkit.getLogger;
-import static org.bukkit.Bukkit.getServer;
+import static org.bukkit.Bukkit.*;
 
 
 public class PMCommand implements CommandExecutor{
@@ -44,6 +46,9 @@ public class PMCommand implements CommandExecutor{
         String receiverMsgFormat = config.getString("pm-receiver-message");
 
         assert receiverMsgFormat != null;
+        if (config.getBoolean("enable-notification")) {
+            target.playSound(target, "minecraft:entity.experience_orb.pickup", Float.parseFloat(Objects.requireNonNull(config.getString("notification-volume"))), Float.parseFloat(Objects.requireNonNull(config.getString("notification-pitch"))));
+        }
         target.sendMessage(LegacyComponentSerializer.legacyAmpersand().deserialize( config.getString("msg-prefix") + " " + receiverMsgFormat.replace("{receiver-name}", target.getName()).replace("{sender-name}", player.getName()).replace("{message}", message)));
         assert senderMsgFormat != null;
         player.sendMessage(LegacyComponentSerializer.legacyAmpersand().deserialize( config.getString("msg-prefix") + " " + senderMsgFormat.replace("{receiver-name}", target.getName()).replace("{sender-name}", player.getName()).replace("{message}", message)));

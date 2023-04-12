@@ -16,3 +16,10 @@ reload-msg: "Reloaded plugin successfully!"
 pm-sender-message: "Вы отправили сообщение игроку {receiver-name}"
 # This message will be sent to a message receiver
 pm-receiver-message: "Получено сообщение от {sender-name} - {message}!"
+
+# Sound notification settings
+
+enable-notification: true
+notification-pitch: 1.0
+notification-volume: 1.0
+notification-sound: "minecraft:entity.experience_orb.pickup"
