@@ -40,6 +40,8 @@ public final class EasyPM extends JavaPlugin {
 
     @Override
     public void onDisable() {
+        this.getLogger().info( logPrefix + "The plugin successfully disabled.");
+        this.getLogger().info( logPrefix + "Goodbye!");
         // Plugin shutdown logic
     }
 
