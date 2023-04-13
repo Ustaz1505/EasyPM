@@ -1,3 +1,5 @@
+[![](https://img.shields.io/modrinth/dt/nEw4blzM?logo=modrinth)](https://modrinth.com/plugin/easypm)
+--
 # EasyPM
 This is a light plugin for customizable pm command.
 
