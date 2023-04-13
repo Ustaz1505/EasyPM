@@ -1,0 +1,19 @@
+# EasyPM v1.5 Messages Config
+# Color codes in console logs will not work! Do not even try to use it.
+
+reload-msg: "Reloaded plugin successfully!"
+not-player-err: "The command can only be executed by the user!v"
+not-online-player: "The player is offline!"
+
+
+# /pm settings
+# User messages:
+# You can use {receiver-name}, {sender-name}, {message}
+# For color system use &-codes
+
+# This message will be sent to a message sender
+pm-sender-message: "You sent a message to player {receiver-name}"
+# This message will be sent to a message receiver
+pm-receiver-message: "Received message from {sender-name}: {message}"
+#
+pm-usage-err: "Use /pm <Nickname> <Message>!"

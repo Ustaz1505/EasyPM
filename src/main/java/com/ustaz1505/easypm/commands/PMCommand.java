@@ -22,7 +22,7 @@ public class PMCommand implements CommandExecutor{
         }
         Player player = (Player) sender;
         if (args.length < 2) {
-            player.sendMessage(LegacyComponentSerializer.legacyAmpersand().deserialize(msgPrefix + "Use /pm <Nickname> <Message>!"));
+            player.sendMessage(LegacyComponentSerializer.legacyAmpersand().deserialize(msgPrefix + getMessagesConfig().getString("pm-usage-err")));
             return true;
         }
         Player target = getServer().getPlayer(args[0]);
@@ -39,8 +39,8 @@ public class PMCommand implements CommandExecutor{
         }
         message.append(args[args.length - 1]);
 
-        String senderMsgFormat = config.getString("pm-sender-message");
-        String receiverMsgFormat = config.getString("pm-receiver-message");
+        String senderMsgFormat = getMessagesConfig().getString("pm-sender-message");
+        String receiverMsgFormat = getMessagesConfig().getString("pm-receiver-message");
 
         assert receiverMsgFormat != null;
         if (config.getBoolean("enable-notification")) {
