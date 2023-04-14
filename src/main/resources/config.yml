@@ -2,7 +2,7 @@
 # Color codes in console logs will not work! Do not even try to use it.
 
 # Messages files are located in /languages/
-messages-file: "messages_ru.yml"
+messages-file: "messages_en-us.yml"
 
 log-prefix: "[EasyPM]"
 msg-prefix : "[&aP&bM&r]"
