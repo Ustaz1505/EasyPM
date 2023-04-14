@@ -21,24 +21,25 @@ public final class EasyPM extends JavaPlugin {
     public static String notPlayerError;
     public static String notOnlinePlayer;
     public static Logger logger;
-
     public static File customConfigFile;
     public static FileConfiguration customConfig;
+    public static File msgFolder;
 
     @Override
     public void onEnable() {
         // Plugin startup logic = this;
 
+        epm = this;
         this.saveDefaultConfig();
+        config = epm.getConfig();
+        logger = epm.getLogger();
+        msgFolder = new File (getDataFolder(), "languages");
         createMessagesConfig();
 
-        epm = this;
-        config = epm.getConfig();
         logPrefix = config.getString("log-prefix") + " ";
         msgPrefix = config.getString("msg-prefix") + " ";
         notPlayerError = getMessagesConfig().getString("not-player-err");
         notOnlinePlayer = getMessagesConfig().getString("not-online-player");
-        logger = epm.getLogger();
 
         Objects.requireNonNull(this.getCommand("pm")).setExecutor(new PMCommand());
         Objects.requireNonNull(this.getCommand("pm")).setTabCompleter(new PMTabCompleter());
@@ -61,10 +62,12 @@ public final class EasyPM extends JavaPlugin {
     }
 
     public void createMessagesConfig() {
-        customConfigFile = new File(getDataFolder(), "messages.yml");
+
+        customConfigFile = new File(msgFolder, Objects.requireNonNull(config.getString("messages-file")));
         if (!customConfigFile.exists()) {
             customConfigFile.getParentFile().mkdirs();
-            saveResource("messages.yml", false);
+            saveResource("languages/messages_ru.yml", false);
+            saveResource("languages/messages_en-us.yml", false);
         }
 
         customConfig = new YamlConfiguration();
