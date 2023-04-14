@@ -2,8 +2,10 @@
 # Color codes in console logs will not work! Do not even try to use it.
 
 reload-msg: "Reloaded plugin successfully!"
-not-player-err: "The command can only be executed by the user!v"
+not-player-err: "The command can only be executed by the user!"
 not-online-player: "The player is offline!"
+
+lang-changed: "Language changed to English"
 
 
 # /pm settings

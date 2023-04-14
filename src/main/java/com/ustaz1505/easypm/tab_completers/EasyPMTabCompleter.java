@@ -6,7 +6,12 @@ import org.bukkit.command.TabCompleter;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 
+import java.io.File;
+import java.util.ArrayList;
 import java.util.List;
+import java.util.Objects;
+
+import static com.ustaz1505.easypm.EasyPM.msgFolder;
 
 public class EasyPMTabCompleter implements TabCompleter {
 
@@ -15,8 +20,18 @@ public class EasyPMTabCompleter implements TabCompleter {
     public @Nullable List<String> onTabComplete(@NotNull CommandSender commandSender, @NotNull Command command, @NotNull String alias, @NotNull String[] args) {
         if (args.length == 1) {
             return List.of(
-                    "reload"
+                    "reload",
+                    "language",
+                    "lang"
             );
+        } else if (args.length == 2) {
+            if (args[0].equals("lang") || args[0].equals("language")) {
+                List<String> a = new ArrayList<>();
+                for (final File fileEntry : Objects.requireNonNull(msgFolder.listFiles())) {
+                    a.add(fileEntry.getName().substring(9, fileEntry.getName().length() - 4));
+                }
+                return a;
+            }
         }
         return null;
     }

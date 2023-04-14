@@ -28,7 +28,6 @@ public final class EasyPM extends JavaPlugin {
     @Override
     public void onEnable() {
         // Plugin startup logic = this;
-
         epm = this;
         this.saveDefaultConfig();
         config = epm.getConfig();

@@ -19,63 +19,58 @@ public class EasyPMCommand implements CommandExecutor {
         if (Objects.equals(args[0], "reload")) {
             if (sender instanceof Player) {
 
-                epm.reloadConfig();
-
-                config = epm.getConfig();
-
-                // Reload message config
-
-                customConfig = new YamlConfiguration();
-                customConfigFile = new File(msgFolder, Objects.requireNonNull(config.getString("messages-file")));
-                try {
-                    customConfig.load(customConfigFile);
-                } catch (Exception e) {
-                    logger.info("Caught an exception" + e);
-                }
-
-                //
-
-                logPrefix = config.getString("log-prefix") + " ";
-                msgPrefix = config.getString("msg-prefix") + " ";
-
-                notPlayerError = getMessagesConfig().getString("not-player-err");
-                notOnlinePlayer = getMessagesConfig().getString("not-online-player");
+                reloadConfigs();
 
                 sender.sendMessage(LegacyComponentSerializer.legacyAmpersand().deserialize(msgPrefix + getMessagesConfig().getString("reload-msg")));
                 return true;
             } else {
 
-                epm.reloadConfig();
+                reloadConfigs();
 
-                config = epm.getConfig();
-
-                // Reload message config
-
-                customConfig = new YamlConfiguration();
-                customConfigFile = new File(msgFolder, Objects.requireNonNull(config.getString("messages-file")));
-                try {
-                    customConfig.load(customConfigFile);
-                } catch (Exception e) {
-                    logger.info("Caught an exception" + e);
-                }
-
-                //
-
-                logPrefix = config.getString("log-prefix") + " ";
-                msgPrefix = config.getString("msg-prefix") + " ";
-
-                notPlayerError = getMessagesConfig().getString("not-player-err");
-                notOnlinePlayer = getMessagesConfig().getString("not-online-player");
                 logger.info(logPrefix + getMessagesConfig().getString("reload-msg"));
                 return true;
             }
         } else if (Objects.equals(args[0], "language") || Objects.equals(args[0], "lang")) {
             if (sender instanceof Player) {
+                String langCode = args[1];
+                config.set("messages-file", "messages_"+langCode+".yml");
+                epm.saveConfig();
+                reloadConfigs();
+                sender.sendMessage(LegacyComponentSerializer.legacyAmpersand().deserialize(msgPrefix + getMessagesConfig().getString("lang-changed")));
                 return true;
             } else {
+                String langCode = args[1];
+                config.set("messages-file", "messages_"+langCode+".yml");
+                epm.saveConfig();
+                reloadConfigs();
+                logger.info(logPrefix + getMessagesConfig().getString("lang-changed"));
                 return true;
             }
         }
         return true;
+    }
+
+    public static void reloadConfigs() {
+        epm.reloadConfig();
+
+        config = epm.getConfig();
+
+        // Reload message config
+
+        customConfig = new YamlConfiguration();
+        customConfigFile = new File(msgFolder, Objects.requireNonNull(config.getString("messages-file")));
+        try {
+            customConfig.load(customConfigFile);
+        } catch (Exception e) {
+            logger.info("Caught an exception" + e);
+        }
+
+        //
+
+        logPrefix = config.getString("log-prefix") + " ";
+        msgPrefix = config.getString("msg-prefix") + " ";
+
+        notPlayerError = getMessagesConfig().getString("not-player-err");
+        notOnlinePlayer = getMessagesConfig().getString("not-online-player");
     }
 }
