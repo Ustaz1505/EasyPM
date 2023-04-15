@@ -9,10 +9,11 @@ All parameters are configurable in `/plugins/EasyPM/config.yml`
 
 If you want to change language you can use these languages in your `config.yml`:
 
-|  Language  |  Code   |         File         |
-|:----------:|:-------:|:--------------------:|
-|  Russian   |   ru    |   messages_ru.yml    |
-|  English   |  en-us  |  messages_en-us.yml  |
+| Language | Code  |        File        |
+|:--------:|:-----:|:------------------:|
+| Russian  |  ru   |  messages_ru.yml   |
+| English  | en-us | messages_en-us.yml |
 
+You can [open a new pull request](https://github.com/Ustaz1505/EasyPM/pulls "Github pull requests") for translation to other languages
 
 To reload all configs use ```/easypm reload```
