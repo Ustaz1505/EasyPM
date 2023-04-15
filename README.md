@@ -7,7 +7,7 @@ Usage: ```/pm <Online player> <Message>```
 
 All parameters are configurable in `/plugins/EasyPM/config.yml`
 
-If you want to change language you can use these languages in your `config.yml`:
+If you want to change language you can use these language files in your `config.yml`:
 
 | Language | Code  |        File        |
 |:--------:|:-----:|:------------------:|
