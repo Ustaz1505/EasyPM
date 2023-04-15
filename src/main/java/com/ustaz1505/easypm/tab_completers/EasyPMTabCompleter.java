@@ -22,15 +22,20 @@ public class EasyPMTabCompleter implements TabCompleter {
             return List.of(
                     "reload",
                     "language",
-                    "lang"
+                    "join-alert"
             );
         } else if (args.length == 2) {
-            if (args[0].equals("lang") || args[0].equals("language")) {
+            if (args[0].equalsIgnoreCase("lang") || args[0].equalsIgnoreCase("language")) {
                 List<String> a = new ArrayList<>();
                 for (final File fileEntry : Objects.requireNonNull(msgFolder.listFiles())) {
                     a.add(fileEntry.getName().substring(9, fileEntry.getName().length() - 4));
                 }
                 return a;
+            } else if (args[0].equalsIgnoreCase("join-alert") || args[0].equalsIgnoreCase("ja")) {
+                return List.of(
+                        "true",
+                        "false"
+                );
             }
         }
         return null;

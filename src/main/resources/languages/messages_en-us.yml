@@ -1,12 +1,17 @@
 # EasyPM v1.5 Messages Config
 # Color codes in console logs will not work! Do not even try to use it.
+# For command errors, you can use {alias} to get a variant spelling of
+# In some cases you can use the {value} and {arg0} parameters. See the wiki for details.
 
 join-message: "You can send a personal message with the /pm command"
 
 reload-msg: "Reloaded plugin successfully!"
 not-player-err: "The command can only be executed by the user!"
 not-online-player: "The player is offline!"
-
+join-set-err: "Use /{alias} join-alert <true/false>"
+join-set-complete: "The join-alert value has been changed to {value}"
+lang-change-code-err: "This language code does not exist"
+lang-change-usage-err: "Use /{alias} {arg0} <Language code>"
 lang-changed: "Language changed to English"
 
 

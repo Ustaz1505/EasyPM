@@ -6,7 +6,7 @@
 
     <groupId>com.ustaz1505</groupId>
     <artifactId>EasyPM</artifactId>
-    <version>1.6.2-dev</version>
+    <version>1.7</version>
     <packaging>jar</packaging>
 
     <name>EasyPM</name>
