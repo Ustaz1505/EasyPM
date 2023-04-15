@@ -11,7 +11,9 @@ import static com.ustaz1505.easypm.EasyPM.*;
 public class JoinEvent implements Listener {
     @EventHandler
     public void onPlayerJoin(PlayerJoinEvent event) {
-        Player player = event.getPlayer();
-        player.sendMessage(LegacyComponentSerializer.legacyAmpersand().deserialize(msgPrefix + getMessagesConfig().getString("join-message")));
+        if (config.getBoolean("join-alert")) {
+            Player player = event.getPlayer();
+            player.sendMessage(LegacyComponentSerializer.legacyAmpersand().deserialize(msgPrefix + getMessagesConfig().getString("join-message")));
+        }
     }
 }
