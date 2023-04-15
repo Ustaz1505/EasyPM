@@ -1,6 +1,8 @@
 # EasyPM v1.5 Messages Config
 # Color codes in console logs will not work! Do not even try to use it.
 
+join-message: "You can send a personal message with the /pm command"
+
 reload-msg: "Reloaded plugin successfully!"
 not-player-err: "The command can only be executed by the user!"
 not-online-player: "The player is offline!"

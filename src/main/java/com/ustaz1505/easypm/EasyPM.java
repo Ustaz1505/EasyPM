@@ -2,6 +2,7 @@ package com.ustaz1505.easypm;
 
 import com.ustaz1505.easypm.commands.EasyPMCommand;
 import com.ustaz1505.easypm.commands.PMCommand;
+import com.ustaz1505.easypm.events.JoinEvent;
 import com.ustaz1505.easypm.tab_completers.EasyPMTabCompleter;
 import com.ustaz1505.easypm.tab_completers.PMTabCompleter;
 import org.bukkit.configuration.file.FileConfiguration;
@@ -44,6 +45,9 @@ public final class EasyPM extends JavaPlugin {
         Objects.requireNonNull(this.getCommand("pm")).setTabCompleter(new PMTabCompleter());
         Objects.requireNonNull(this.getCommand("easypm")).setExecutor(new EasyPMCommand());
         Objects.requireNonNull(this.getCommand("easypm")).setTabCompleter(new EasyPMTabCompleter());
+
+        getServer().getPluginManager().registerEvents(new JoinEvent(), this);
+
         this.getLogger().info( logPrefix + "The plugin successfully started!");
     }
 
