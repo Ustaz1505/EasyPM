@@ -25,10 +25,16 @@ public final class EasyPM extends JavaPlugin {
     public static File customConfigFile;
     public static FileConfiguration customConfig;
     public static File msgFolder;
+    public static String db_url;
+    public static String db_username;
+    public static String db_password;
 
     @Override
     public void onEnable() {
         // Plugin startup logic = this;
+
+        // Global variables
+
         epm = this;
         this.saveDefaultConfig();
         config = epm.getConfig();
@@ -36,15 +42,32 @@ public final class EasyPM extends JavaPlugin {
         msgFolder = new File (getDataFolder(), "languages");
         createMessagesConfig();
 
+        // Global Config variables
+
         logPrefix = config.getString("log-prefix") + " ";
         msgPrefix = config.getString("msg-prefix") + " ";
         notPlayerError = getMessagesConfig().getString("not-player-err");
         notOnlinePlayer = getMessagesConfig().getString("not-online-player");
 
+        db_url = config.getString("database.host");
+        db_username = config.getString("user");
+        db_password = config.getString("password");
+
+        // Local config variables
+
+
+        // Database connection
+
+
+
+        // Commands implementation
+
         Objects.requireNonNull(this.getCommand("pm")).setExecutor(new PMCommand());
         Objects.requireNonNull(this.getCommand("pm")).setTabCompleter(new PMTabCompleter());
         Objects.requireNonNull(this.getCommand("easypm")).setExecutor(new EasyPMCommand());
         Objects.requireNonNull(this.getCommand("easypm")).setTabCompleter(new EasyPMTabCompleter());
+
+        // Events implementation
 
         getServer().getPluginManager().registerEvents(new JoinEvent(), this);
 
