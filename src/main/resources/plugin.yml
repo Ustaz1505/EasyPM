@@ -15,3 +15,7 @@ commands:
     permission: easypm.easypm
     aliases:
       - epm
+  history:
+    description: Sends your message history (sent to you and sent by you)
+    usage: /history [Page]
+    permission: easypm.history
