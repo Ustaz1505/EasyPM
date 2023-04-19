@@ -15,10 +15,3 @@ enable-notification: true
 notification-pitch: 1.0
 notification-volume: 1.0
 notification-sound: "minecraft:entity.experience_orb.pickup"
-
-database:
-  host: localhost # host of your database
-  port: 3306 # default port for MySQL
-  database: db # name of your database. A database server can contain multiple databases
-  user: username
-  password: passy

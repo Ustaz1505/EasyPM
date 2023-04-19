@@ -1,6 +1,8 @@
 package com.ustaz1505.easypm.commands;
 
+import com.ustaz1505.easypm.database.Database;
 import net.kyori.adventure.text.serializer.legacy.LegacyComponentSerializer;
+import org.bukkit.Bukkit;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandExecutor;
 import org.bukkit.command.CommandSender;
@@ -14,6 +16,9 @@ import static org.bukkit.Bukkit.*;
 
 
 public class PMCommand implements CommandExecutor{
+
+    private Database db;
+
     @Override
     public boolean onCommand(@NotNull CommandSender sender, @ NotNull Command command, @NotNull String label, String[] args) {
         if (!(sender instanceof Player)) {
@@ -39,8 +44,19 @@ public class PMCommand implements CommandExecutor{
         }
         message.append(args[args.length - 1]);
 
+
+        try {
+            db = new Database();
+        }
+        catch(Exception e) {
+            e.printStackTrace();
+            Bukkit.getPluginManager().disablePlugin(epm);
+            return true;
+        }
+
         String senderMsgFormat = getMessagesConfig().getString("pm-sender-message");
         String receiverMsgFormat = getMessagesConfig().getString("pm-receiver-message");
+
 
         assert receiverMsgFormat != null;
         if (config.getBoolean("enable-notification")) {
@@ -49,6 +65,9 @@ public class PMCommand implements CommandExecutor{
         target.sendMessage(LegacyComponentSerializer.legacyAmpersand().deserialize( config.getString("msg-prefix") + " " + receiverMsgFormat.replace("{receiver-name}", target.getName()).replace("{sender-name}", player.getName()).replace("{message}", message)));
         assert senderMsgFormat != null;
         player.sendMessage(LegacyComponentSerializer.legacyAmpersand().deserialize( config.getString("msg-prefix") + " " + senderMsgFormat.replace("{receiver-name}", target.getName()).replace("{sender-name}", player.getName()).replace("{message}", message)));
+
+        db.addMessage(String.valueOf(message), sender.getName(), target.getName());
+
         return true;
     }
 }

@@ -1,148 +1,130 @@
 package com.ustaz1505.easypm.database;
 
+
+import java.io.Serializable;
 import java.sql.Connection;
-import java.sql.PreparedStatement;
+import java.sql.DriverManager;
 import java.sql.ResultSet;
-import java.sql.SQLException;
-import java.util.logging.Level;
+import java.sql.Statement;
+import java.util.List;
 
-import org.bukkit.entity.Player;
+public class Database {
+    private final String url;
+    public Database() throws Exception {
 
-import com.ustaz1505.easypm.Error; // YOU MUST IMPORT THE CLASS ERROR, AND ERRORS!!!
-import com.ustaz1505.easypm.Errors;
-import com.ustaz1505.easypm.EasyPM; // Import main class!
+        url = "jdbc:sqlite:plugins/EasyPM/database.db";
+        Class.forName("org.sqlite.JDBC").getDeclaredConstructor().newInstance();
 
+        Connection c = getConnection();
+        Statement s = c.createStatement();
 
-public abstract class Database {
-    EasyPM plugin;
-    Connection connection;
-    // The name of the table we created back in SQLite class.
-    public String table = "table_name";
-    public int tokens = 0;
-    public Database(EasyPM instance){
-        plugin = instance;
+        s.executeUpdate("CREATE TABLE IF NOT EXISTS \"epm_users\" (" +
+                "\"id\" INTEGER NOT NULL UNIQUE, " +
+                "\"username\" TEXT, " +
+                "\"uuid\" TEXT, " +
+                "PRIMARY KEY(\"id\" AUTOINCREMENT)" +
+                ");");
+
+        s.executeUpdate("CREATE TABLE IF NOT EXISTS \"epm_messages\" (" +
+                "\"id\"INTEGER NOT NULL UNIQUE," +
+                "\"time\"INTEGER NOT NULL," +
+                "\"from\"INTEGER NOT NULL," +
+                "\"to\"INTEGER NOT NULL," +
+                "\"contents\"TEXT NOT NULL," +
+                "PRIMARY KEY(\"id\" AUTOINCREMENT)" +
+                ");");
+
+        s.close();
+        c.close();
+
     }
 
-    public abstract Connection getSQLConnection();
+    public Connection getConnection() throws Exception {
+        return DriverManager.getConnection(url);
+    }
 
-    public abstract void load();
-
-    public void initialize(){
-        connection = getSQLConnection();
-        try{
-            PreparedStatement ps = connection.prepareStatement("SELECT * FROM " + table + " WHERE player = ?");
-            ResultSet rs = ps.executeQuery();
-            close(ps,rs);
-
-        } catch (SQLException ex) {
-            plugin.getLogger().log(Level.SEVERE, "Unable to retreive connection", ex);
+    public void addUser(String Username, String UUID) {
+        try {
+            Connection c = this.getConnection();
+            Statement s = c.createStatement();
+            s.executeUpdate("INSERT INTO epm_users ('username', 'uuid') VALUES ('" + Username + "', '" + UUID + "')");
+            s.close();
+            c.close();
+        }
+        catch(Exception e) {
+            e.printStackTrace();
         }
     }
 
-    // These are the methods you can use to get things out of your database. You of course can make new ones to return different things in the database.
-    // This returns the number of people the player killed.
-    public Integer getTokens(String string) {
-        Connection conn = null;
-        PreparedStatement ps = null;
-        ResultSet rs = null;
+    public int countUsers(String Username) {
         try {
-            conn = getSQLConnection();
-            ps = conn.prepareStatement("SELECT * FROM " + table + " WHERE player = '"+string+"';");
-
-            rs = ps.executeQuery();
-            while(rs.next()){
-                if(rs.getString("player").equalsIgnoreCase(string.toLowerCase())){ // Tell database to search for the player you sent into the method. e.g getTokens(sam) It will look for sam.
-                    return rs.getInt("kills"); // Return the players ammount of kills. If you wanted to get total (just a random number for an example for you guys) You would change this to total!
-                }
-            }
-        } catch (SQLException ex) {
-            plugin.getLogger().log(Level.SEVERE, Errors.sqlConnectionExecute(), ex);
-        } finally {
-            try {
-                if (ps != null)
-                    ps.close();
-                if (conn != null)
-                    conn.close();
-            } catch (SQLException ex) {
-                plugin.getLogger().log(Level.SEVERE, Errors.sqlConnectionClose(), ex);
-            }
+            Connection c = this.getConnection();
+            Statement s = c.createStatement();
+            ResultSet result = c.createStatement().executeQuery("SELECT COUNT(*) FROM epm_users WHERE username = '" + Username + "'");
+            int temp = result.getInt(1);
+            s.close();
+            c.close();
+            return temp;
         }
-        return 0;
-    }
-    // Exact same method here, Except as mentioned above i am looking for total!
-    public Integer getTotal(String string) {
-        Connection conn = null;
-        PreparedStatement ps = null;
-        ResultSet rs = null;
-        try {
-            conn = getSQLConnection();
-            ps = conn.prepareStatement("SELECT * FROM " + table + " WHERE player = '"+string+"';");
-
-            rs = ps.executeQuery();
-            while(rs.next()){
-                if(rs.getString("player").equalsIgnoreCase(string.toLowerCase())){
-                    return rs.getInt("total");
-                }
-            }
-        } catch (SQLException ex) {
-            plugin.getLogger().log(Level.SEVERE, Errors.sqlConnectionExecute(), ex);
-        } finally {
-            try {
-                if (ps != null)
-                    ps.close();
-                if (conn != null)
-                    conn.close();
-            } catch (SQLException ex) {
-                plugin.getLogger().log(Level.SEVERE, Errors.sqlConnectionClose(), ex);
-            }
+        catch(Exception e) {
+            e.printStackTrace();
+            return -1;
         }
-        return 0;
     }
 
-    // Now we need methods to save things to the database
-    public void setTokens(Player player, Integer tokens, Integer total) {
-        Connection conn = null;
-        PreparedStatement ps = null;
+    public void addMessage(String Message, String From, String To) {
         try {
-            conn = getSQLConnection();
-            ps = conn.prepareStatement("REPLACE INTO " + table + " (player,kills,total) VALUES(?,?,?)"); // IMPORTANT. In SQLite class, We made 3 colums. player, Kills, Total.
-            ps.setString(1, player.getName().toLowerCase());                                             // YOU MUST put these into this line!! And depending on how many
-            // colums you put (say you made 5) All 5 need to be in the brackets
-            // Seperated with comma's (,) AND there needs to be the same amount of
-            // question marks in the VALUES brackets. Right now i only have 3 colums
-            // So VALUES (?,?,?) If you had 5 colums VALUES(?,?,?,?,?)
-
-            ps.setInt(2, tokens); // This sets the value in the database. The colums go in order. Player is ID 1, kills is ID 2, Total would be 3 and so on. you can use
-            // setInt, setString and so on. tokens and total are just variables sent in, You can manually send values in as well. p.setInt(2, 10) <-
-            // This would set the players kills instantly to 10. Sorry about the variable names, It sets their kills to 10 i just have the variable called
-            // Tokens from another plugin :/
-            ps.setInt(3, total);
-            ps.executeUpdate();
-            return;
-        } catch (SQLException ex) {
-            plugin.getLogger().log(Level.SEVERE, Errors.sqlConnectionExecute(), ex);
-        } finally {
-            try {
-                if (ps != null)
-                    ps.close();
-                if (conn != null)
-                    conn.close();
-            } catch (SQLException ex) {
-                plugin.getLogger().log(Level.SEVERE, Errors.sqlConnectionClose(), ex);
-            }
+            Connection c = this.getConnection();
+            Statement s = c.createStatement();
+            long time = System.currentTimeMillis() / 1000L;
+            s.executeUpdate("INSERT INTO epm_messages ('time', 'from', 'to', 'contents') VALUES (" + time + ", " + getUserID(From) + ", " + getUserID(To) + ", '" + Message +"')");
+            s.close();
+            c.close();
         }
-        return;
+        catch(Exception e) {
+            e.printStackTrace();
+        }
+
     }
 
-
-    public void close(PreparedStatement ps,ResultSet rs){
+    public int getUserID(String Username) {
         try {
-            if (ps != null)
-                ps.close();
-            if (rs != null)
-                rs.close();
-        } catch (SQLException ex) {
-            Error.close(plugin, ex);
+            Connection c = this.getConnection();
+            Statement s = c.createStatement();
+            ResultSet result = c.createStatement().executeQuery("SELECT id from epm_users WHERE username = '"  + Username + "'");
+            int temp = result.getInt(1);
+            s.close();
+            c.close();
+            return temp;
+        }
+        catch(Exception e) {
+            e.printStackTrace();
+            return 0;
+        }
+    }
+
+    public List<List<? extends Serializable>> getAllMessages(String Username) {
+        List<List<? extends Serializable>> messages = new java.util.ArrayList<>();
+        try {
+            Connection c = this.getConnection();
+            Statement s = c.createStatement();
+            ResultSet resultSet = c.createStatement().executeQuery("SELECT *");
+            while(resultSet.next()) {
+                List<? extends Serializable> message = List.of(
+                        resultSet.getInt(2),
+                        resultSet.getInt(3),
+                        resultSet.getInt(4),
+                        resultSet.getString(5)
+                );
+                messages.add(message);
+            }
+            s.close();
+            c.close();
+            return messages;
+        }
+        catch(Exception e) {
+            e.printStackTrace();
+            return new java.util.ArrayList<>();
         }
     }
 }

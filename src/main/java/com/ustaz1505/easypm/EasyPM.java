@@ -42,6 +42,11 @@ public final class EasyPM extends JavaPlugin {
         msgFolder = new File (getDataFolder(), "languages");
         createMessagesConfig();
 
+        // Database things
+
+        File file = new File("plugins/EasyPM");
+        file.mkdir();
+
         // Global Config variables
 
         logPrefix = config.getString("log-prefix") + " ";
@@ -54,9 +59,6 @@ public final class EasyPM extends JavaPlugin {
         db_password = config.getString("password");
 
         // Local config variables
-
-
-        // Database connection
 
 
 
