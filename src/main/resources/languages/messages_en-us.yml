@@ -28,3 +28,13 @@ pm-sender-message: "You sent a message to player {receiver-name}"
 pm-receiver-message: "Received message from {sender-name}: {message}"
 #
 pm-usage-err: "Use /pm <Nickname> <Message>!"
+# /history settings
+# You can use {page}
+
+history-title: " &eMessage history &a(page {page})&r"
+history-msg-received-title: "Received message from {sender-name} {date} in {time}: "
+history-msg-sent-title: "You sent a message to {receiver-name} {date} at {time}: "
+history-msg-self-sent-title: "You sent a message to yourself {date} in {time}: "
+history-usage-err: "Use /history [Page]!"
+history-none-err: "You haven't sent or received a message yet!"
+history-no-such-page-err: "This page does not exist!"

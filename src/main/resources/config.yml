@@ -15,3 +15,7 @@ enable-notification: true
 notification-pitch: 1.0
 notification-volume: 1.0
 notification-sound: "minecraft:entity.experience_orb.pickup"
+
+# /history settings
+
+history-messages-in-page: 5

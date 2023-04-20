@@ -6,7 +6,7 @@
 
     <groupId>com.ustaz1505</groupId>
     <artifactId>EasyPM</artifactId>
-    <version>1.8.1-dev</version>
+    <version>1.8.2-dev</version>
     <packaging>jar</packaging>
 
     <name>EasyPM</name>
@@ -69,13 +69,6 @@
             <artifactId>paper-api</artifactId>
             <version>1.19.4-R0.1-SNAPSHOT</version>
             <scope>provided</scope>
-        </dependency>
-
-        <!-- https://mvnrepository.com/artifact/com.mysql/mysql-connector-j -->
-        <dependency>
-            <groupId>com.mysql</groupId>
-            <artifactId>mysql-connector-j</artifactId>
-            <version>8.0.32</version>
         </dependency>
     </dependencies>
 

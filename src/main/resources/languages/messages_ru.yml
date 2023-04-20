@@ -16,7 +16,7 @@ lang-change-code-err: "Этот код языка не существует"
 lang-change-usage-err: "Используйте /{alias} {arg0} <Код языка>"
 lang-changed: "Язык изменен на Русский"
 
-# /pm settings
+# Настройки /pm
 # Пользовательские сообщения:
 # Вы можете использовать {receiver-name}, {sender-name}, {message}
 # Для цветовой системы используйте &-коды
@@ -27,3 +27,14 @@ pm-sender-message: "Вы отправили сообщение игроку {rec
 pm-receiver-message: "Получено сообщение от {sender-name}: {message}"
 #
 pm-usage-err: "Используйте /pm <Ник> <Сообщение>!"
+
+# Настройки /history
+# Вы можете использовать {page}
+
+history-title: "&eИстория сообщений &a(страница {page})&r"
+history-msg-received-title: "Получено сообщение от {sender-name} {date} в {time}: "
+history-msg-sent-title: "Вы отправили сообщение игроку {receiver-name} {date} в {time}: "
+history-msg-self-sent-title: "Вы отправили сообщение себе {date} в {time}: "
+history-usage-err: "Используйте /history [Страница]!"
+history-none-err: "Вы еще не отправляли или получали сообщений!"
+history-no-such-page-err: "Такой страницы не существует!"

@@ -1,6 +1,7 @@
 package com.ustaz1505.easypm;
 
 import com.ustaz1505.easypm.commands.EasyPMCommand;
+import com.ustaz1505.easypm.commands.HistoryCommand;
 import com.ustaz1505.easypm.commands.PMCommand;
 import com.ustaz1505.easypm.events.JoinEvent;
 import com.ustaz1505.easypm.tab_completers.EasyPMTabCompleter;
@@ -68,6 +69,7 @@ public final class EasyPM extends JavaPlugin {
         Objects.requireNonNull(this.getCommand("pm")).setTabCompleter(new PMTabCompleter());
         Objects.requireNonNull(this.getCommand("easypm")).setExecutor(new EasyPMCommand());
         Objects.requireNonNull(this.getCommand("easypm")).setTabCompleter(new EasyPMTabCompleter());
+        Objects.requireNonNull(this.getCommand("history")).setExecutor(new HistoryCommand());
 
         // Events implementation
 

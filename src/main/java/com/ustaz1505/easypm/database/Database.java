@@ -103,15 +103,31 @@ public class Database {
         }
     }
 
+    public String getUserByID(int Id) {
+        try {
+            Connection c = this.getConnection();
+            Statement s = c.createStatement();
+            ResultSet result = c.createStatement().executeQuery("SELECT username from epm_users WHERE id = " + Id);
+            String temp = result.getString(1);
+            s.close();
+            c.close();
+            return temp;
+        }
+        catch(Exception e) {
+            e.printStackTrace();
+            return "404";
+        }
+    }
+
     public List<List<? extends Serializable>> getAllMessages(String Username) {
         List<List<? extends Serializable>> messages = new java.util.ArrayList<>();
         try {
             Connection c = this.getConnection();
             Statement s = c.createStatement();
-            ResultSet resultSet = c.createStatement().executeQuery("SELECT *");
+            ResultSet resultSet = c.createStatement().executeQuery("SELECT * FROM epm_messages WHERE \"from\" = " + getUserID(Username) + " OR \"to\" = " + getUserID(Username));
             while(resultSet.next()) {
                 List<? extends Serializable> message = List.of(
-                        resultSet.getInt(2),
+                        resultSet.getLong(2),
                         resultSet.getInt(3),
                         resultSet.getInt(4),
                         resultSet.getString(5)
